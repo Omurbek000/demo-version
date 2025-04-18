@@ -1,31 +1,32 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-    {% block title %}  {% endblock title %} </title>
+    <title>{% block title %}  {% endblock title %} </title>
 
     <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
     <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/detail.css' %}">
 </head>
 <body>
     <header class="header sticky-top d-flex align-items-center">
-        <div class="header-logo">
-            <img src="{% static 'img/REGION.png'%}" alt="">
-        </div>
-        <div class="search">
-            <form action="" id="search-form" class="search_form" style='display:none;'>
+        <a class="header-logo" href="{% url 'main:catalog' %}">
+            <img src="{% static 'img/'%}" alt="Region Interlude"> 
+        </a>
+         {% comment %} <div class="search">
+            <form action="" id="search-form" class="search_form d-flex" style='display:none;'>
                 <input type="text" name="q" class="form_input" placeholder="Search">
                 <button type="submit" class="btnforsearch"> </button>
             </form>
-        </div>
+        </div>  {% endcomment %}
 
         <div class="header-nav d-flex gap-4">
             <a href="#" class="h-profile">
                 <img src="{% static 'img/profile.png'%}" alt=""> 
             </a>
-            <a href="#" class="h-profile">
+            <a href="{% url 'cart:cart_detail' %}" class="h-profile">
                 <img src="{% static 'img/cart.png'%}" alt=""> 
             </a>
 
@@ -34,12 +35,14 @@
                 <img src="{% static 'img/search.png'%}" alt="">
             </a>
             <div class="search-popup" id="search-popup" style="display: none;">
-                <form class="search-form" method="GET" action="" id="search-form" ></form>
-                <div class="input-container">
-                    <input type="text" class="form_input" name="q" placeholder="Search">
-                    <button type="submit" class="btnForseach"></button>
+                <form class="search-form" method="GET" action="" id="search-form" >
+                    <div class="input-container">
+                        <input type="text" class="form_input" name="q" placeholder="Search">
+                        <button type="submit" class="btnforseach"></button>
+    
+                    </div>
+                </form>
 
-                </div>
 
             </div>
           </div>
@@ -54,22 +57,36 @@
             
     </div>
 
-    <script>
+     <script>
       document.getElementById("toggle-search").addEventListener('click' , function(event)) {
         event.preventDefault();
-        const search-popup = document.getElementById("search-popup");
+        const searchPopup = document.getElementById("search-popup");
 
-        if (searchpopup.style.display === 'none' || searchpopup.style.display === '') {
-            searchpopup.style.display = 'block';
+        if (searchPopup.style.display === 'none' || searchPopup.style.display === '') {
+            searchPopup.style.display = 'block';
 
         } else {
-          searchpopup.style.display = 'none';
+          searchPopup.style.display = 'none';
         }
-      })
-    </script>
+      });
+    </script> 
+
+ {% comment %} заного сделанный скрипт {% endcomment %}
+    {% comment %} <script>
+        document.getElementById("toggle-search").addEventListener('click', function(event) {
+          event.preventDefault();
+          const searchPopup = document.getElementById("search-popup");
+      
+          if (searchPopup.style.display === 'none' || searchPopup.style.display === '') {
+            searchPopup.style.display = 'block';
+          } else {
+            searchPopup.style.display = 'none';
+          }
+        });
+     </script> {% endcomment %}
+          
 
         {% comment %} js bootstrap {% endcomment %}
-    
         <script src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 </body>
 </html>

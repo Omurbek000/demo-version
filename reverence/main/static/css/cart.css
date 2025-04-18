@@ -1,0 +1,36 @@
+
+.table-head {
+  border-bottom: 1px solid #fff;
+}
+
+.table-p {
+  background-color: brown;
+  color: white;
+  text-align: right;
+}
+
+.c-item-img img {
+  width: 70px;
+  height: 100px;
+}
+
+.cart-item {
+  border-bottom: 1px solid #fff;
+  padding: 40px 0 40px 20px;
+}
+.c-quantity-form input {
+  width: 70px;
+  border-bottom: 1px solid #fff;
+  height: 35px;
+  color: #fff;
+}
+
+.c-item-total, .c-item-quantity, .c-item-price {
+  width: 140px;
+}
+
+.right-side-items {
+  text-align: right;
+
+}
+

@@ -5,7 +5,7 @@ class Size(models.Model):
     name = models.CharField(max_length=20, unique=True)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
 
 class Category(models.Model):
@@ -13,13 +13,16 @@ class Category(models.Model):
     slug = models.SlugField(unique=True)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
     class Meta:
         ordering = ["name"]
         indexes = [models.Index(fields=["name"])]
         verbose_name = "category"
         verbose_name_plural = "categories"
+
+    def get_item_count(self):
+        return ClothingItem.objects.filter(category=self).count()
 
 
 class ClothingItem(models.Model):
@@ -32,6 +35,7 @@ class ClothingItem(models.Model):
     category = models.ForeignKey(
         Category, on_delete=models.CASCADE, related_name="clothing_item"
     )
+    image = models.ImageField(upload_to="product/%Y/%m/%d", blank=True)
     description = models.TextField(blank=True)
     created_at = models.DateTimeField(auto_now_add=True, null=True)
     updated_at = models.DateTimeField(auto_now=True)
@@ -39,7 +43,7 @@ class ClothingItem(models.Model):
     discount = models.DecimalField(max_digits=5, decimal_places=2)
 
     def __str__(self):
-        return self.name
+        return str(self.name)
 
     def get_price_with_discount(self):
         if self.discount > 0:
@@ -48,9 +52,20 @@ class ClothingItem(models.Model):
 
 
 class ClothingItemSize(models.Model):
+
     clothing_item = models.ForeignKey(ClothingItem, on_delete=models.CASCADE)
     size = models.ForeignKey(Size, on_delete=models.CASCADE)
     available = models.BooleanField(default=True)
 
     class Meta:
         unique_together = ("clothing_item", "size")
+
+
+class ItemImage(models.Model):
+    product = models.ForeignKey(
+        ClothingItem, related_name="images", on_delete=models.CASCADE
+    )
+    image = models.ImageField(upload_to="product/%Y/%m/%d", blank=True)
+
+    def __str__(self):
+        return f"{self.product.name} - {self.image.name}"
